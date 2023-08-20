@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.mui-style .Mui-selected{
+    background-color: rgba(33, 150, 243, 0.8);
+}
