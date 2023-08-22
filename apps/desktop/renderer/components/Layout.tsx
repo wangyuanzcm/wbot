@@ -37,37 +37,43 @@ const MenuOptions = [
   {
     Text: "总览",
     Icon: <HomeIcon />,
-    Link: "/"
+    Link: "/",
+    id: "home"
   },
   {
     Text: "钱包管理",
     Icon: <WalletIcon />,
-    Link: "/wallet-manage"
+    Link: "/wallet-manage",
+    id: "wallet-manage"
   },
   {
     Text: "策略列表",
     Icon: <ListAltIcon />,
-    Link: "/strategy-list"
+    Link: "/strategy-list",
+    id: "strategy-list"
   },
   {
     Text: "策略验证",
     Icon: <BugReportIcon />,
-    Link: "/strategy-check"
+    Link: "/strategy-check",
+    id: "strategy-check"
   },
   {
     Text: "在线交易",
     Icon: <ShoppingBagIcon />,
-    Link: "/trade-online"
+    Link: "/trade-online",
+    id: "trade-online"
   },
   {
     Text: "代理设置",
     Icon: <RouterIcon />,
-    Link: "/vpn-setting"
+    Link: "/vpn-setting",
+    id: "vpn-setting"
   },
   {
     Text: "智能问答",
     Icon: <HeadsetMicIcon />,
-    Link: "https://poe.com/"
+    id: "ai-conversion"
   }
 ];
 
@@ -83,8 +89,12 @@ export default function LayoutDefault({
   const handleListItemClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>,
     index: number,
+    menuId: string
   ) => {
     setSelectedIndex(index);
+    if(menuId === 'ai-conversion'){
+      window.electronAPI?.changeView("tab2");
+    }
   };
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -210,7 +220,7 @@ export default function LayoutDefault({
                   component="a"
                   href={option.Link}
                   selected={selectedIndex === index}
-                  onClick={(event) => handleListItemClick(event, index)}>
+                  onClick={(event) => handleListItemClick(event, index, option.id)}>
                   <ListItemIcon>
                     {option.Icon}
                   </ListItemIcon>

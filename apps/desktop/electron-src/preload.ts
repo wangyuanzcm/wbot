@@ -1,6 +1,4 @@
-/* eslint-disable @typescript-eslint/no-namespace */
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { ipcRenderer, IpcRenderer } from 'electron'
+import { contextBridge, ipcRenderer, IpcRenderer } from 'electron'
 
 declare global {
   namespace NodeJS {
@@ -10,8 +8,18 @@ declare global {
   }
 }
 
+contextBridge.exposeInMainWorld('_global', {
+  changeView: () => ipcRenderer.invoke('changeView')
+})
+
+contextBridge.exposeInMainWorld('electronAPI', {
+  changeView: (currentTab: string) => ipcRenderer.send('change-view', currentTab)
+})
+
+
 // Since we disabled nodeIntegration we can reintroduce
 // needed node functionality here
-process.once('loaded', () => {
-  (global as any).ipcRenderer = ipcRenderer
-})
+// process.once('loaded', () => {
+//   console.log("loaded,================================================================");
+//   (global as any).ipcRenderer = ipcRenderer
+// })
